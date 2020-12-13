@@ -1,0 +1,50 @@
+.progress {
+  position: relative;
+}
+.progress progress {
+  display: none;
+}
+.progressValue {
+    
+    width: 38px;
+    height: 18px;
+    background: #34495E;
+    border-radius: 5px;
+    color: #ffffff;
+    line-height: 21px;
+    text-align: center;
+    position: absolute;
+    top: -25px;
+    content: "80";
+    font-family: 'Signika-Lite';
+    font-size: 13px;
+    line-height: 19px;
+}
+.progressBg {
+    width: 270px;
+    background: #DBE1E8;
+    position: relative;
+    height: 15px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.progressBar {
+    background: #10CDC1;
+    width: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+
+
+.progress progress[value="80"] + .progressValue::before {
+  content: "80%";
+}
+.progress progress[value="80"] + .progressValue {
+  left: calc(80% - 19px);
+}
+.progress progress[value="80"] ~ .progressBg .progressBar {
+  width: 80%; 
+}
