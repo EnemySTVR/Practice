@@ -20,6 +20,13 @@
     font-size: 13px;
     line-height: 19px;
 }
+.progressValue .triangle {
+    position: inherit;
+    border: 3px solid transparent;
+    top: 18px;
+    left: 16px;
+    border-top: 3px solid #34495E;
+}
 .progressBg {
     width: 270px;
     background: #DBE1E8;
@@ -37,14 +44,917 @@
     left: 0;
   }
 
+/* 
+Using in html:
 
+<div class="progress">
+    <progress max="100" value="80"></progress>
+    <div class="progressValue">
+        <div class="triangle"></div>
+    </div>
+    <div class="progressBg">
+        <div class="progressBar"></div>
+    </div>
+</div> 
+*/
 
-.progress progress[value="80"] + .progressValue::before {
-  content: "80%";
+.progress progress[value="1"] + .progressValue::before {
+    content: "1%";
 }
-.progress progress[value="80"] + .progressValue {
-  left: calc(80% - 19px);
+ .progress progress[value="1"] + .progressValue {
+    left: calc(1% - 19px);
+}
+.progress progress[value="1"] ~ .progressBg .progressBar {
+    width: 1%; 
+}  
+.progress progress[value="2"] + .progressValue::before {
+    content: "2%";
+}
+ .progress progress[value="2"] + .progressValue {
+    left: calc(2% - 19px);
+}
+.progress progress[value="2"] ~ .progressBg .progressBar {
+    width: 2%; 
+}
+.progress progress[value="3"] + .progressValue::before {
+    content: "3%";
+}
+ .progress progress[value="3"] + .progressValue {
+    left: calc(3% - 19px);
+}
+.progress progress[value="3"] ~ .progressBg .progressBar {
+    width: 3%; 
+}
+.progress progress[value="4"] + .progressValue::before {
+    content: "4%";
+}
+ .progress progress[value="4"] + .progressValue {
+    left: calc(4% - 19px);
+}
+.progress progress[value="4"] ~ .progressBg .progressBar {
+    width: 4%; 
+}
+.progress progress[value="5"] + .progressValue::before {
+    content: "5%";
+}
+ .progress progress[value="5"] + .progressValue {
+    left: calc(5% - 19px);
+}
+.progress progress[value="5"] ~ .progressBg .progressBar {
+    width: 5%; 
+}
+.progress progress[value="6"] + .progressValue::before {
+    content: "6%";
+}
+ .progress progress[value="6"] + .progressValue {
+    left: calc(6% - 19px);
+}
+.progress progress[value="6"] ~ .progressBg .progressBar {
+    width: 6%; 
+}
+.progress progress[value="7"] + .progressValue::before {
+    content: "7%";
+}
+ .progress progress[value="7"] + .progressValue {
+    left: calc(7% - 19px);
+}
+.progress progress[value="7"] ~ .progressBg .progressBar {
+    width: 7%; 
+}
+.progress progress[value="8"] + .progressValue::before {
+    content: "8%";
+}
+ .progress progress[value="8"] + .progressValue {
+    left: calc(8% - 19px);
+}
+.progress progress[value="8"] ~ .progressBg .progressBar {
+    width: 8%; 
+}
+.progress progress[value="9"] + .progressValue::before {
+    content: "9%";
+}
+ .progress progress[value="9"] + .progressValue {
+    left: calc(9% - 19px);
+}
+.progress progress[value="9"] ~ .progressBg .progressBar {
+    width: 9%; 
+}
+.progress progress[value="10"] + .progressValue::before {
+    content: "10%";
+}
+ .progress progress[value="10"] + .progressValue {
+    left: calc(10% - 19px);
+}
+.progress progress[value="10"] ~ .progressBg .progressBar {
+    width: 10%; 
+}
+.progress progress[value="11"] + .progressValue::before {
+    content: "11%";
+}
+ .progress progress[value="11"] + .progressValue {
+    left: calc(1% - 19px);
+}
+.progress progress[value="11"] ~ .progressBg .progressBar {
+    width: 1%; 
+}  
+.progress progress[value="12"] + .progressValue::before {
+    content: "12%";
+}
+ .progress progress[value="12"] + .progressValue {
+    left: calc(12% - 19px);
+}
+.progress progress[value="12"] ~ .progressBg .progressBar {
+    width: 12%; 
+}
+.progress progress[value="13"] + .progressValue::before {
+    content: "13%";
+}
+ .progress progress[value="13"] + .progressValue {
+    left: calc(13% - 19px);
+}
+.progress progress[value="13"] ~ .progressBg .progressBar {
+    width: 13%; 
+}
+.progress progress[value="14"] + .progressValue::before {
+    content: "14%";
+}
+ .progress progress[value="14"] + .progressValue {
+    left: calc(14% - 19px);
+}
+.progress progress[value="14"] ~ .progressBg .progressBar {
+    width: 14%; 
+}
+.progress progress[value="15"] + .progressValue::before {
+    content: "15%";
+}
+ .progress progress[value="15"] + .progressValue {
+    left: calc(15% - 19px);
+}
+.progress progress[value="15"] ~ .progressBg .progressBar {
+    width: 15%; 
+}
+.progress progress[value="16"] + .progressValue::before {
+    content: "16%";
+}
+ .progress progress[value="16"] + .progressValue {
+    left: calc(16% - 19px);
+}
+.progress progress[value="16"] ~ .progressBg .progressBar {
+    width: 16%; 
+}
+.progress progress[value="17"] + .progressValue::before {
+    content: "17%";
+}
+ .progress progress[value="17"] + .progressValue {
+    left: calc(17% - 19px);
+}
+.progress progress[value="17"] ~ .progressBg .progressBar {
+    width: 17%; 
+}
+.progress progress[value="18"] + .progressValue::before {
+    content: "18%";
+}
+ .progress progress[value="18"] + .progressValue {
+    left: calc(18% - 19px);
+}
+.progress progress[value="18"] ~ .progressBg .progressBar {
+    width: 18%; 
+}
+.progress progress[value="19"] + .progressValue::before {
+    content: "19%";
+}
+ .progress progress[value="19"] + .progressValue {
+    left: calc(19% - 19px);
+}
+.progress progress[value="19"] ~ .progressBg .progressBar {
+    width: 19%; 
+}
+.progress progress[value="20"] + .progressValue::before {
+    content: "20%";
+}
+ .progress progress[value="20"] + .progressValue {
+    left: calc(20% - 19px);
+}
+.progress progress[value="20"] ~ .progressBg .progressBar {
+    width: 20%; 
+}
+.progress progress[value="21"] + .progressValue::before {
+    content: "21%";
+}
+ .progress progress[value="21"] + .progressValue {
+    left: calc(21% - 19px);
+}
+.progress progress[value="21"] ~ .progressBg .progressBar {
+    width: 21%; 
+}  
+.progress progress[value="22"] + .progressValue::before {
+    content: "22%";
+}
+ .progress progress[value="22"] + .progressValue {
+    left: calc(22% - 19px);
+}
+.progress progress[value="22"] ~ .progressBg .progressBar {
+    width: 22%; 
+}
+.progress progress[value="23"] + .progressValue::before {
+    content: "23%";
+}
+ .progress progress[value="23"] + .progressValue {
+    left: calc(23% - 19px);
+}
+.progress progress[value="23"] ~ .progressBg .progressBar {
+    width: 23%; 
+}
+.progress progress[value="24"] + .progressValue::before {
+    content: "24%";
+}
+ .progress progress[value="24"] + .progressValue {
+    left: calc(24% - 19px);
+}
+.progress progress[value="24"] ~ .progressBg .progressBar {
+    width: 24%; 
+}
+.progress progress[value="25"] + .progressValue::before {
+    content: "25%";
+}
+ .progress progress[value="25"] + .progressValue {
+    left: calc(25% - 19px);
+}
+.progress progress[value="25"] ~ .progressBg .progressBar {
+    width: 25%; 
+}
+.progress progress[value="26"] + .progressValue::before {
+    content: "26%";
+}
+ .progress progress[value="26"] + .progressValue {
+    left: calc(26% - 19px);
+}
+.progress progress[value="26"] ~ .progressBg .progressBar {
+    width: 26%; 
+}
+.progress progress[value="27"] + .progressValue::before {
+    content: "27%";
+}
+ .progress progress[value="27"] + .progressValue {
+    left: calc(27% - 19px);
+}
+.progress progress[value="27"] ~ .progressBg .progressBar {
+    width: 27%; 
+}
+.progress progress[value="28"] + .progressValue::before {
+    content: "28%";
+}
+ .progress progress[value="28"] + .progressValue {
+    left: calc(28% - 19px);
+}
+.progress progress[value="28"] ~ .progressBg .progressBar {
+    width: 28%; 
+}
+.progress progress[value="29"] + .progressValue::before {
+    content: "29%";
+}
+ .progress progress[value="29"] + .progressValue {
+    left: calc(29% - 19px);
+}
+.progress progress[value="29"] ~ .progressBg .progressBar {
+    width: 29%; 
+}
+.progress progress[value="30"] + .progressValue::before {
+    content: "30%";
+}
+ .progress progress[value="30"] + .progressValue {
+    left: calc(30% - 19px);
+}
+.progress progress[value="30"] ~ .progressBg .progressBar {
+    width: 30%; 
+}
+.progress progress[value="31"] + .progressValue::before {
+    content: "31%";
+}
+ .progress progress[value="31"] + .progressValue {
+    left: calc(31% - 19px);
+}
+.progress progress[value="31"] ~ .progressBg .progressBar {
+    width: 31%; 
+}  
+.progress progress[value="32"] + .progressValue::before {
+    content: "32%";
+}
+ .progress progress[value="32"] + .progressValue {
+    left: calc(32% - 19px);
+}
+.progress progress[value="32"] ~ .progressBg .progressBar {
+    width: 32%; 
+}
+.progress progress[value="33"] + .progressValue::before {
+    content: "33%";
+}
+ .progress progress[value="33"] + .progressValue {
+    left: calc(33% - 19px);
+}
+.progress progress[value="33"] ~ .progressBg .progressBar {
+    width: 33%; 
+}
+.progress progress[value="34"] + .progressValue::before {
+    content: "34%";
+}
+ .progress progress[value="34"] + .progressValue {
+    left: calc(34% - 19px);
+}
+.progress progress[value="34"] ~ .progressBg .progressBar {
+    width: 34%; 
+}
+.progress progress[value="35"] + .progressValue::before {
+    content: "35%";
+}
+ .progress progress[value="35"] + .progressValue {
+    left: calc(35% - 19px);
+}
+.progress progress[value="35"] ~ .progressBg .progressBar {
+    width: 35%; 
+}
+.progress progress[value="36"] + .progressValue::before {
+    content: "36%";
+}
+ .progress progress[value="36"] + .progressValue {
+    left: calc(36% - 19px);
+}
+.progress progress[value="36"] ~ .progressBg .progressBar {
+    width: 36%; 
+}
+.progress progress[value="37"] + .progressValue::before {
+    content: "37%";
+}
+ .progress progress[value="37"] + .progressValue {
+    left: calc(37% - 19px);
+}
+.progress progress[value="37"] ~ .progressBg .progressBar {
+    width: 37%; 
+}
+.progress progress[value="38"] + .progressValue::before {
+    content: "38%";
+}
+ .progress progress[value="38"] + .progressValue {
+    left: calc(38% - 19px);
+}
+.progress progress[value="38"] ~ .progressBg .progressBar {
+    width: 38%; 
+}
+.progress progress[value="39"] + .progressValue::before {
+    content: "39%";
+}
+ .progress progress[value="39"] + .progressValue {
+    left: calc(39% - 19px);
+}
+.progress progress[value="39"] ~ .progressBg .progressBar {
+    width: 39%; 
+}
+.progress progress[value="40"] + .progressValue::before {
+    content: "40%";
+}
+ .progress progress[value="40"] + .progressValue {
+    left: calc(40% - 19px);
+}
+.progress progress[value="40"] ~ .progressBg .progressBar {
+    width: 40%; 
+}
+.progress progress[value="41"] + .progressValue::before {
+    content: "41%";
+}
+ .progress progress[value="41"] + .progressValue {
+    left: calc(41% - 19px);
+}
+.progress progress[value="41"] ~ .progressBg .progressBar {
+    width: 41%; 
+}  
+.progress progress[value="42"] + .progressValue::before {
+    content: "42%";
+}
+ .progress progress[value="42"] + .progressValue {
+    left: calc(42% - 19px);
+}
+.progress progress[value="42"] ~ .progressBg .progressBar {
+    width: 42%; 
+}
+.progress progress[value="43"] + .progressValue::before {
+    content: "43%";
+}
+ .progress progress[value="43"] + .progressValue {
+    left: calc(43% - 19px);
+}
+.progress progress[value="43"] ~ .progressBg .progressBar {
+    width: 43%; 
+}
+.progress progress[value="44"] + .progressValue::before {
+    content: "44%";
+}
+ .progress progress[value="44"] + .progressValue {
+    left: calc(44% - 19px);
+}
+.progress progress[value="44"] ~ .progressBg .progressBar {
+    width: 44%; 
+}
+.progress progress[value="45"] + .progressValue::before {
+    content: "45%";
+}
+ .progress progress[value="45"] + .progressValue {
+    left: calc(45% - 19px);
+}
+.progress progress[value="45"] ~ .progressBg .progressBar {
+    width: 45%; 
+}
+.progress progress[value="46"] + .progressValue::before {
+    content: "46%";
+}
+ .progress progress[value="46"] + .progressValue {
+    left: calc(46% - 19px);
+}
+.progress progress[value="46"] ~ .progressBg .progressBar {
+    width: 46%; 
+}
+.progress progress[value="47"] + .progressValue::before {
+    content: "47%";
+}
+ .progress progress[value="47"] + .progressValue {
+    left: calc(47% - 19px);
+}
+.progress progress[value="47"] ~ .progressBg .progressBar {
+    width: 47%; 
+}
+.progress progress[value="48"] + .progressValue::before {
+    content: "48%";
+}
+ .progress progress[value="48"] + .progressValue {
+    left: calc(48% - 19px);
+}
+.progress progress[value="48"] ~ .progressBg .progressBar {
+    width: 48%; 
+}
+.progress progress[value="49"] + .progressValue::before {
+    content: "49%";
+}
+ .progress progress[value="49"] + .progressValue {
+    left: calc(49% - 19px);
+}
+.progress progress[value="49"] ~ .progressBg .progressBar {
+    width: 49%; 
+}
+.progress progress[value="50"] + .progressValue::before {
+    content: "50%";
+}
+ .progress progress[value="50"] + .progressValue {
+    left: calc(50% - 19px);
+}
+.progress progress[value="50"] ~ .progressBg .progressBar {
+    width: 50%; 
+}
+.progress progress[value="51"] + .progressValue::before {
+    content: "51%";
+}
+ .progress progress[value="51"] + .progressValue {
+    left: calc(51% - 19px);
+}
+.progress progress[value="51"] ~ .progressBg .progressBar {
+    width: 51%; 
+}  
+.progress progress[value="52"] + .progressValue::before {
+    content: "52%";
+}
+ .progress progress[value="52"] + .progressValue {
+    left: calc(52% - 19px);
+}
+.progress progress[value="52"] ~ .progressBg .progressBar {
+    width: 52%; 
+}
+.progress progress[value="53"] + .progressValue::before {
+    content: "53%";
+}
+ .progress progress[value="53"] + .progressValue {
+    left: calc(53% - 19px);
+}
+.progress progress[value="53"] ~ .progressBg .progressBar {
+    width: 53%; 
+}
+.progress progress[value="54"] + .progressValue::before {
+    content: "54%";
+}
+ .progress progress[value="54"] + .progressValue {
+    left: calc(54% - 19px);
+}
+.progress progress[value="54"] ~ .progressBg .progressBar {
+    width: 54%; 
+}
+.progress progress[value="55"] + .progressValue::before {
+    content: "55%";
+}
+ .progress progress[value="55"] + .progressValue {
+    left: calc(55% - 19px);
+}
+.progress progress[value="55"] ~ .progressBg .progressBar {
+    width: 55%; 
+}
+.progress progress[value="56"] + .progressValue::before {
+    content: "56%";
+}
+ .progress progress[value="56"] + .progressValue {
+    left: calc(56% - 19px);
+}
+.progress progress[value="56"] ~ .progressBg .progressBar {
+    width: 56%; 
+}
+.progress progress[value="57"] + .progressValue::before {
+    content: "57%";
+}
+ .progress progress[value="57"] + .progressValue {
+    left: calc(57% - 19px);
+}
+.progress progress[value="57"] ~ .progressBg .progressBar {
+    width: 57%; 
+}
+.progress progress[value="58"] + .progressValue::before {
+    content: "58%";
+}
+ .progress progress[value="58"] + .progressValue {
+    left: calc(58% - 19px);
+}
+.progress progress[value="58"] ~ .progressBg .progressBar {
+    width: 58%; 
+}
+.progress progress[value="59"] + .progressValue::before {
+    content: "59%";
+}
+ .progress progress[value="59"] + .progressValue {
+    left: calc(59% - 19px);
+}
+.progress progress[value="59"] ~ .progressBg .progressBar {
+    width: 59%; 
+}
+.progress progress[value="60"] + .progressValue::before {
+    content: "60%";
+}
+ .progress progress[value="60"] + .progressValue {
+    left: calc(60% - 19px);
+}
+.progress progress[value="60"] ~ .progressBg .progressBar {
+    width: 60%; 
+}
+.progress progress[value="61"] + .progressValue::before {
+    content: "61%";
+}
+ .progress progress[value="61"] + .progressValue {
+    left: calc(61% - 19px);
+}
+.progress progress[value="61"] ~ .progressBg .progressBar {
+    width: 61%; 
+}  
+.progress progress[value="62"] + .progressValue::before {
+    content: "62%";
+}
+ .progress progress[value="62"] + .progressValue {
+    left: calc(62% - 19px);
+}
+.progress progress[value="62"] ~ .progressBg .progressBar {
+    width: 62%; 
+}
+.progress progress[value="63"] + .progressValue::before {
+    content: "63%";
+}
+ .progress progress[value="63"] + .progressValue {
+    left: calc(63% - 19px);
+}
+.progress progress[value="63"] ~ .progressBg .progressBar {
+    width: 63%; 
+}
+.progress progress[value="64"] + .progressValue::before {
+    content: "64%";
+}
+ .progress progress[value="64"] + .progressValue {
+    left: calc(64% - 19px);
+}
+.progress progress[value="64"] ~ .progressBg .progressBar {
+    width: 64%; 
+}
+.progress progress[value="65"] + .progressValue::before {
+    content: "65%";
+}
+ .progress progress[value="65"] + .progressValue {
+    left: calc(65% - 19px);
+}
+.progress progress[value="65"] ~ .progressBg .progressBar {
+    width: 65%; 
+}
+.progress progress[value="66"] + .progressValue::before {
+    content: "66%";
+}
+ .progress progress[value="66"] + .progressValue {
+    left: calc(66% - 19px);
+}
+.progress progress[value="66"] ~ .progressBg .progressBar {
+    width: 66%; 
+}
+.progress progress[value="67"] + .progressValue::before {
+    content: "67%";
+}
+ .progress progress[value="67"] + .progressValue {
+    left: calc(67% - 19px);
+}
+.progress progress[value="67"] ~ .progressBg .progressBar {
+    width: 67%; 
+}
+.progress progress[value="68"] + .progressValue::before {
+    content: "68%";
+}
+ .progress progress[value="68"] + .progressValue {
+    left: calc(68% - 19px);
+}
+.progress progress[value="68"] ~ .progressBg .progressBar {
+    width: 68%; 
+}
+.progress progress[value="69"] + .progressValue::before {
+    content: "69%";
+}
+ .progress progress[value="69"] + .progressValue {
+    left: calc(69% - 19px);
+}
+.progress progress[value="69"] ~ .progressBg .progressBar {
+    width: 69%; 
+}
+.progress progress[value="70"] + .progressValue::before {
+    content: "70%";
+}
+ .progress progress[value="70"] + .progressValue {
+    left: calc(70% - 19px);
+}
+.progress progress[value="70"] ~ .progressBg .progressBar {
+    width: 70%; 
+}
+.progress progress[value="71"] + .progressValue::before {
+    content: "71%";
+}
+ .progress progress[value="71"] + .progressValue {
+    left: calc(71% - 19px);
+}
+.progress progress[value="71"] ~ .progressBg .progressBar {
+    width: 71%; 
+}  
+.progress progress[value="72"] + .progressValue::before {
+    content: "72%";
+}
+ .progress progress[value="72"] + .progressValue {
+    left: calc(72% - 19px);
+}
+.progress progress[value="72"] ~ .progressBg .progressBar {
+    width: 72%; 
+}
+.progress progress[value="73"] + .progressValue::before {
+    content: "73%";
+}
+ .progress progress[value="73"] + .progressValue {
+    left: calc(73% - 19px);
+}
+.progress progress[value="73"] ~ .progressBg .progressBar {
+    width: 73%; 
+}
+.progress progress[value="74"] + .progressValue::before {
+    content: "74%";
+}
+ .progress progress[value="74"] + .progressValue {
+    left: calc(74% - 19px);
+}
+.progress progress[value="74"] ~ .progressBg .progressBar {
+    width: 74%; 
+}
+.progress progress[value="75"] + .progressValue::before {
+    content: "75%";
+}
+ .progress progress[value="75"] + .progressValue {
+    left: calc(75% - 19px);
+}
+.progress progress[value="75"] ~ .progressBg .progressBar {
+    width: 75%; 
+}
+.progress progress[value="76"] + .progressValue::before {
+    content: "76%";
+}
+ .progress progress[value="76"] + .progressValue {
+    left: calc(76% - 19px);
+}
+.progress progress[value="76"] ~ .progressBg .progressBar {
+    width: 76%; 
+}
+.progress progress[value="77"] + .progressValue::before {
+    content: "77%";
+}
+ .progress progress[value="77"] + .progressValue {
+    left: calc(77% - 19px);
+}
+.progress progress[value="77"] ~ .progressBg .progressBar {
+    width: 77%; 
+}
+.progress progress[value="78"] + .progressValue::before {
+    content: "78%";
+}
+ .progress progress[value="78"] + .progressValue {
+    left: calc(78% - 19px);
+}
+.progress progress[value="78"] ~ .progressBg .progressBar {
+    width: 78%; 
+}
+.progress progress[value="79"] + .progressValue::before {
+    content: "79%";
+}
+ .progress progress[value="79"] + .progressValue {
+    left: calc(79% - 19px);
+}
+.progress progress[value="79"] ~ .progressBg .progressBar {
+    width: 9%; 
+}
+.progress progress[value="80"] + .progressValue::before {
+    content: "80%";
+}
+ .progress progress[value="80"] + .progressValue {
+    left: calc(80% - 19px);
 }
 .progress progress[value="80"] ~ .progressBg .progressBar {
-  width: 80%; 
+    width: 80%; 
+}
+.progress progress[value="81"] + .progressValue::before {
+  content: "81%";
+}
+.progress progress[value="81"] + .progressValue {
+  left: calc(81% - 19px);
+}
+.progress progress[value="81"] ~ .progressBg .progressBar {
+  width: 81%; 
+}  
+.progress progress[value="82"] + .progressValue::before {
+    content: "82%";
+}
+ .progress progress[value="82"] + .progressValue {
+    left: calc(82% - 19px);
+}
+.progress progress[value="82"] ~ .progressBg .progressBar {
+    width: 82%; 
+}
+.progress progress[value="83"] + .progressValue::before {
+    content: "83%";
+}
+ .progress progress[value="83"] + .progressValue {
+    left: calc(83% - 19px);
+}
+.progress progress[value="83"] ~ .progressBg .progressBar {
+    width: 83%; 
+}
+.progress progress[value="84"] + .progressValue::before {
+    content: "84%";
+}
+ .progress progress[value="84"] + .progressValue {
+    left: calc(84% - 19px);
+}
+.progress progress[value="84"] ~ .progressBg .progressBar {
+    width: 84%; 
+}
+.progress progress[value="85"] + .progressValue::before {
+    content: "85%";
+}
+ .progress progress[value="85"] + .progressValue {
+    left: calc(85% - 19px);
+}
+.progress progress[value="85"] ~ .progressBg .progressBar {
+    width: 85%; 
+}
+.progress progress[value="86"] + .progressValue::before {
+    content: "86%";
+}
+ .progress progress[value="86"] + .progressValue {
+    left: calc(86% - 19px);
+}
+.progress progress[value="86"] ~ .progressBg .progressBar {
+    width: 86%; 
+}
+.progress progress[value="87"] + .progressValue::before {
+    content: "87%";
+}
+ .progress progress[value="87"] + .progressValue {
+    left: calc(87% - 19px);
+}
+.progress progress[value="87"] ~ .progressBg .progressBar {
+    width: 87%; 
+}
+.progress progress[value="88"] + .progressValue::before {
+    content: "88%";
+}
+ .progress progress[value="88"] + .progressValue {
+    left: calc(88% - 19px);
+}
+.progress progress[value="88"] ~ .progressBg .progressBar {
+    width: 88%; 
+}
+.progress progress[value="89"] + .progressValue::before {
+    content: "89%";
+}
+ .progress progress[value="89"] + .progressValue {
+    left: calc(89% - 19px);
+}
+.progress progress[value="89"] ~ .progressBg .progressBar {
+    width: 89%; 
+}
+.progress progress[value="90"] + .progressValue::before {
+    content: "90%";
+}
+ .progress progress[value="90"] + .progressValue {
+    left: calc(90% - 19px);
+}
+.progress progress[value="90"] ~ .progressBg .progressBar {
+    width: 90%; 
+}
+.progress progress[value="91"] + .progressValue::before {
+    content: "91%";
+}
+ .progress progress[value="91"] + .progressValue {
+    left: calc(91% - 19px);
+}
+.progress progress[value="91"] ~ .progressBg .progressBar {
+    width: 91%; 
+}  
+.progress progress[value="92"] + .progressValue::before {
+    content: "92%";
+}
+ .progress progress[value="92"] + .progressValue {
+    left: calc(92% - 19px);
+}
+.progress progress[value="92"] ~ .progressBg .progressBar {
+    width: 92%; 
+}
+.progress progress[value="93"] + .progressValue::before {
+    content: "93%";
+}
+ .progress progress[value="93"] + .progressValue {
+    left: calc(93% - 19px);
+}
+.progress progress[value="93"] ~ .progressBg .progressBar {
+    width: 93%; 
+}
+.progress progress[value="94"] + .progressValue::before {
+    content: "94%";
+}
+ .progress progress[value="94"] + .progressValue {
+    left: calc(94% - 19px);
+}
+.progress progress[value="94"] ~ .progressBg .progressBar {
+    width: 94%; 
+}
+.progress progress[value="95"] + .progressValue::before {
+    content: "95%";
+}
+ .progress progress[value="95"] + .progressValue {
+    left: calc(95% - 19px);
+}
+.progress progress[value="95"] ~ .progressBg .progressBar {
+    width: 95%; 
+}
+.progress progress[value="96"] + .progressValue::before {
+    content: "96%";
+}
+ .progress progress[value="96"] + .progressValue {
+    left: calc(96% - 19px);
+}
+.progress progress[value="96"] ~ .progressBg .progressBar {
+    width: 96%; 
+}
+.progress progress[value="97"] + .progressValue::before {
+    content: "97%";
+}
+ .progress progress[value="97"] + .progressValue {
+    left: calc(97% - 19px);
+}
+.progress progress[value="97"] ~ .progressBg .progressBar {
+    width: 97%; 
+}
+.progress progress[value="98"] + .progressValue::before {
+    content: "98%";
+}
+ .progress progress[value="98"] + .progressValue {
+    left: calc(98% - 19px);
+}
+.progress progress[value="98"] ~ .progressBg .progressBar {
+    width: 98%; 
+}
+.progress progress[value="99"] + .progressValue::before {
+    content: "99%";
+}
+ .progress progress[value="99"] + .progressValue {
+    left: calc(99% - 19px);
+}
+.progress progress[value="99"] ~ .progressBg .progressBar {
+    width: 99%; 
+}
+.progress progress[value="100"] + .progressValue::before {
+    content: "100%";
+}
+ .progress progress[value="100"] + .progressValue {
+    left: calc(100% - 19px);
+}
+.progress progress[value="100"] ~ .progressBg .progressBar {
+    width: 100%; 
 }

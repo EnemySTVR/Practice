@@ -1,19 +1,39 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: 'Lato-Lite';
+}
+h1, h3 {
+    
+    color: #33495F;
+    font-family: 'SignikaNegative-Lite';
+}
+h4 {
+    color: #33495F;
+}
+p {
+    color: #566879;
+}
+button p {
+    color: #FFFFFF;
 }
 body {
     background: #EAEDF1;
-    color: #33495F;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 }
 .mainWrap {
-    margin: 62px 0px;
-    width: 1511px;
-    height: 1716px;
+    margin-top: 82px;
+    width: 1348px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+.header {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
-    align-content: flex-start;
+    justify-content: space-between;
+    margin-bottom: 36px;
 }
 .personCard {
     width: 433px;
@@ -21,16 +41,6 @@ body {
     background: #FFFFFF;
     display: flex;
     flex-flow: column nowrap;
-}
-.personCard h1 {
-    font-size: 28px;
-    margin-left: 17px;
-    font-family: 'SignikaNegative-Lite';
-    margin-bottom: 5px;
-}
-.personCard h4 {
-    margin-left: 17px;
-    font-family: 'Lato-Lite';
 }
 .personCard #personalData {
     flex-grow: 1;
@@ -41,13 +51,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-basis: 45%;
+    flex-basis: 46%;
 }
 .nameContainer {
+    flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+}
+.personCard h1 {
+    line-height: 22px;
+    font-size: 28px;
+}
+.personCard h4 {
+    margin-top: 13px;
+    line-height: 15px;
+    font-size: 16px;
 }
 .personCard #infoBar {
     height: 80px;
@@ -55,9 +75,6 @@ body {
     flex-flow: row nowrap;
     justify-content: space-between;
     
-}
-.personCardInfoBox {
-    height: 80px;
 }
 .imgContainer {
     flex-grow: 1;
@@ -84,15 +101,14 @@ body {
 }
 .professionalDescription {
     flex-basis: 410px;
-    padding: 53px 30px 0 30px;
+    padding: 50px 30px 0 30px;
     font-family: 'Lato-Regular';
     font-size: 18px;
     line-height: 30px;
 }
 .professionalDescription h1 {
     font-size: 37px;
-    font-family: 'SignikaNegative-Lite';
-    margin-bottom: 19px;
+    margin-bottom: 17px;
 }
 .professionalDescription a {
     font-family: 'Lato-Regular';
@@ -138,75 +154,76 @@ body {
 .socialWebs img {
     margin: 0 21px;
 }
-.bigBox {
-    height: 1173px;
+.content {
+    display: flex;
+    flex-flow: row wrap;
 }
-.left {
-    width: 635px;
-}
-.right {
-    width: 625px;
-}
-.white {
+.whiteContentSection {
+    padding: 0 23px;
+    padding-top: 33px;
+    padding-bottom: 10px;
+    width: 588px;
     background: #FFFFFF;
-    border-radius: 3px;
-    margin-bottom: 34px;
+    margin-bottom: 33px;
 }
-.white h1 {
+.whiteContentSection h1 {
     margin-top: 5px;
     font-size: 25px;
-    font-family: 'SignikaNegative-Lite';
+    line-height: 21px;
+    margin: 0px 2px;
 }
-.white h2 {
+.whiteContentSection h2 {
+    line-height: 21px;
     font-size: 18px;
-    margin: 0px 15px;
+    margin: 0px 13px;
     color: #9EA7B4;
     font-family: 'Lato-Thin';
 }
-.white h3 {
-    font-size: 18px;
-    font-family: 'SignikaNegative-Lite';
+.whiteContentSection h3 {
+    margin-top: 6px;
+    font-size: 19px;
     color: #04BCA6;
+    padding-bottom: 13px;
 }
-.gray {
+.whiteContentSection button {
+    background: #16C4EC;
+}
+.grayContentSection {
+    padding: 0 25px;
+    padding-top: 33px;
+    padding-bottom: 10px;
+    width: 575px;
     background: #DBE1E8;
-    border-radius: 3px;
-    margin-bottom: 34px;
+    margin-bottom: 33px;
 }
-.gray h1 {
-    margin-top: 5px;
+.grayContentSection h1 {
+    margin-top: 2px;
     font-size: 22px;
-    font-family: 'SignikaNegative-Lite';
+    line-height: 18px;
 }
-.gray h2 {
+.grayContentSection h2 {
+    line-height: 13px;
     font-size: 15px;
     margin: 0px 15px;
     color: #7A8698;
-    font-family: 'Lato-Thin';
 }
-.gray h3 {
-    font-size: 16px;
+.grayContentSection h3 {
+    line-height: 24px;
+    font-size: 17px;
     margin-top: 5px;
-    font-family: 'SignikaNegative-Lite';
     color: #39BFDA;
+    margin-bottom: 17px;
 }
-.firstHeader {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: baseline;
-}
-
-.secondHeader {
-    font-size: 18px;
-    font-family: 'SignikaNegative-Lite';
+.grayContentSection[id="withStars"] h3 {
     color: #04BCA6;
+    margin-bottom: 12px;
 }
-.white .secondHeader {
-    margin-top: 3px;
+.grayContentSection button {
+    background: #10CDC1;
 }
-.boxContent {
-    margin-top: 13px;
-    padding-top: 10px;
+.sectionBody {
+    margin-top: 16px;
+    margin-bottom: 27px;
 }
 .contentItem {
     display: flex;
@@ -214,61 +231,34 @@ body {
     align-items: center;
     margin: 9px 0px;
 }
-.contentItem p {
-    margin: 0px 5px;
-    font-family: 'Lato-Lite';
+.firstHeader {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
 }
 .boxFooter {
-    margin-top: 13px;
-    height: 60px;
-    display: flex;
-    flex-flow: column-reverse nowrap;
-    align-items: stretch;
-}
-.gray .boxFooter {
-    margin-top: 5px;
-}
-.boxFooterWithStars {
-    height: 40px;
-}
-.boxFooter div {
     color: #9EA7B4;
     display: flex;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
 }
 .boxFooter p {
     margin: 0 5px;
 }
-.boxFooter #period {
-    flex-basis: 30%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-}
-.box {
-    margin: 19px 44px;
-    border-radius: 3px;
-}
-.boxBody {
-    font-family: 'Lato-Lite';
-    padding: 23px;
-}
-.bodyWithStars {
-    padding-bottom: 5px;
-}
-.white button {
-    background: #16C4EC;
-}
-.gray button {
-    background: #10CDC1;
-}
-button p {
-    line-height: 38px;
-}
-.gray .boxFooter #text {
+.boxFooter #darkText {
     font-size: 13px;
     color: #33495F;
+}
+.geo, .period {
+    display: flex;
+    flex-flow: row nowrap;
+}
+.geo {
+    flex-basis: 25%;
+}
+.period {
+    flex-grow: 1;
 }
 button {
     font-family: 'Lato-Regular';
@@ -278,14 +268,72 @@ button {
     min-height: 38px;
     border-width: 0px;
     border-radius: 3px;
+    line-height: 30px;
     font-size: 16px;
     color: #FFFFFF;
+    margin: 11px 0px;
+}
+.experience {
+    flex-basis: 640px;
+    padding-bottom: 8px;
+}
+.timeLineBox {
+    flex-basis: 72px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.starttimeLine {
+    flex-basis: 35px;
+    background: #DBE1E8;
+    width: 72px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.starttimeLine p {
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 22px;
+}
+.timeLine {
+    background: #DBE1E8;
+    width: 6px;
+    flex-grow: 1;
+}
+.circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+.other {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    padding-bottom: 8px;
+}
+.softAngle {
+    border-radius: 3px;
 }
 .dotsBox {
     margin-top: -10px;
-    margin-bottom: 34px;
+    margin-bottom: 30px;
+}
+.starBox {
+    padding-right: -4px;
+    min-width: 217px;
+    min-height: 22px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
 }
 .skillBox {
+    width: 625px;
     background: #FFFFFF;
     height: 401px;
     display: flex;
@@ -293,12 +341,13 @@ button {
     border-radius: 1px;
 }
 .hobbiesBox {
+    width: 100% - 10px;
     flex-basis: 125px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: stretch;
-    padding: 0 10px;
+    padding-left: 10px;
 }
 .hobbie {
     margin-top: 15px;
@@ -329,9 +378,30 @@ button {
 .skill {
     margin-bottom: 20px;
 }
+.hardSkills .progressBar {
+    background: #16C4EC;
+}
+.programSkills .progressBar {
+    background: #10CDC1;
+}
 .skill p {
     line-height: 12px;
     font-size: 16px;
     font-family: 'Lato-Lite';
     margin-bottom: 6px;
+}
+.footer {
+    height: 130px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.footerContent {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+.footerContent p {
+    margin: 0px 22px;
 }
