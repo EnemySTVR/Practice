@@ -14,9 +14,6 @@ h4 {
 p {
     color: #566879;
 }
-button p {
-    color: #FFFFFF;
-}
 body {
     background: #EAEDF1;
     display: flex;
@@ -185,7 +182,7 @@ body {
     color: #04BCA6;
     padding-bottom: 13px;
 }
-.whiteContentSection button {
+.whiteContentSection .button {
     background: #16C4EC;
 }
 .grayContentSection {
@@ -218,8 +215,8 @@ body {
     color: #04BCA6;
     margin-bottom: 12px;
 }
-.grayContentSection button {
-    background: #10CDC1;
+.grayContentSection .button {
+    background-color: #10CDC1;
 }
 .sectionBody {
     margin-top: 16px;
@@ -260,18 +257,19 @@ body {
 .period {
     flex-grow: 1;
 }
-button {
+.button {
     font-family: 'Lato-Regular';
-    text-align: center;
-    vertical-align: middle;
-    min-width: 217px;
-    min-height: 38px;
-    border-width: 0px;
+    width: 217px;
+    height: 38px;
     border-radius: 3px;
-    line-height: 30px;
+    line-height: 16px;
     font-size: 16px;
     color: #FFFFFF;
     margin: 11px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 .experience {
     flex-basis: 640px;
