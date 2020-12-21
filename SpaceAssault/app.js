@@ -12,11 +12,13 @@ var requestAnimFrame = (function () {
 
 var player = {
     position: [0, 0],
+    previousPosition: [0, 0],
     sprite: new Sprite('img/sprites.png', [0, 0], [39, 39], 16, [0, 1])
 };
 var bullets = [];
 var enemies = [];
 var explosions = [];
+var megaliths = [];
 
 var lastFire = Date.now();
 var gameTime = 0;
@@ -71,8 +73,9 @@ function update(differenceOfTime) {
                 [0, 1, 2, 3, 2, 1])
         });
     }
-    checkCollisions();
+    checkCollisions(differenceOfTime);
     scoreElement.innerHTML = score;
+
 };
 
 function updateEntities(differenceOfTime) {
@@ -109,6 +112,7 @@ function updateEntities(differenceOfTime) {
         if (explosions.length > 100) {
             explosions.splice(0, 10);
         }
+
     }
 }
 
@@ -124,17 +128,16 @@ function boxCollides(position, size, position2, size2) {
         position2[0] + size2[0], position2[1] + size2[1]);
 }
 
-function checkCollisions() {
+function checkCollisions(differenceOfTime) {
+    var position, position2, size, size2;
     checkPlayerBounds();
-    for (var i = 0; i < enemies.length; i++) {
-
-        var position = enemies[i].position;
-        var size = enemies[i].sprite.size;
+    outer:for (var i = 0; i < enemies.length; i++) {
+        position = enemies[i].position;
+        size = enemies[i].sprite.size;
 
         for (var j = 0; j < bullets.length; j++) {
-
-            var position2 = bullets[j].position;
-            var size2 = bullets[j].sprite.size;
+            position2 = bullets[j].position;
+            size2 = bullets[j].sprite.size;
 
             if (boxCollides(position, size, position2, size2)) {
                 enemies.splice(i, 1);
@@ -153,11 +156,38 @@ function checkCollisions() {
 
                 });
                 bullets.splice(j, 1);
-                break;
+                break outer;
+            }
+        }
+        for (var j = 0; j < megaliths.length; j++) {
+            position2 = megaliths[j].position;
+            size2 = megaliths[j].sprite.size;
+
+            if (boxCollides(position, size, position2, size2)) {
+                if ((position[1] + size[1]/2) > (position2[1] + size2[1]/2)) {
+                    enemies[i].position[1] += enemySpeed * differenceOfTime;
+                } else {
+                    enemies[i].position[1] -= enemySpeed * differenceOfTime;
+                }
             }
         }
         if (boxCollides(position, size, player.position, player.sprite.size)) {
             gameOver();
+        }
+    }
+    for (var i = 0; i < bullets.length; i++) {
+        position = bullets[i].position;
+        size = bullets[i].sprite.size;
+
+        for (var j = 0; j < megaliths.length; j++) {
+            position2 = megaliths[j].position;
+            size2 = megaliths[j].sprite.size;
+
+            if (boxCollides(position, size, position2, size2)) {
+                bullets.splice(i, 1);
+                i--;
+                break;
+            }
         }
     }
 }
@@ -189,6 +219,7 @@ function render() {
     renderEntities(enemies);
     renderEntities(bullets);
     renderEntities(explosions);
+    renderEntities(megaliths);
 
 }
 
@@ -205,24 +236,44 @@ function renderEntities(array) {
     }
 }
 
-function reset() {
-}
+function isPlayerCollideWithMegaliths(differenceOfTime) {
+    for (var i = 0; i < megaliths.length; i++) {
+        var position = megaliths[i].position;
+        var size = megaliths[i].sprite.size;
 
-function handleInput(dt) {
+        if (boxCollides(position, size, player.position, player.sprite.size)) {
+            return true
+        }
+    }
+    return false;
+}
+function handleInput(differenceOfTime) {
     if (input.isDown('DOWN') || input.isDown('s')) {
-        player.position[1] += playerSpeed * dt;
+        player.position[1] += playerSpeed * differenceOfTime;
+        if (isPlayerCollideWithMegaliths()) {
+            player.position[1] -= playerSpeed * differenceOfTime;
+        }
     }
 
     if (input.isDown('UP') || input.isDown('w')) {
-        player.position[1] -= playerSpeed * dt;
+        player.position[1] -= playerSpeed * differenceOfTime;
+        if (isPlayerCollideWithMegaliths()) {
+            player.position[1] += playerSpeed * differenceOfTime;
+        }
     }
 
     if (input.isDown('LEFT') || input.isDown('a')) {
-        player.position[0] -= playerSpeed * dt;
+        player.position[0] -= playerSpeed * differenceOfTime;
+        if (isPlayerCollideWithMegaliths()) {
+            player.position[0] += playerSpeed * differenceOfTime;
+        }
     }
 
     if (input.isDown('RIGHT') || input.isDown('d')) {
-        player.position[0] += playerSpeed * dt;
+        player.position[0] += playerSpeed * differenceOfTime;
+        if (isPlayerCollideWithMegaliths()) {
+            player.position[0] -= playerSpeed * differenceOfTime;
+        }
     }
 
     if (input.isDown('SPACE') &&
@@ -264,9 +315,30 @@ function reset() {
     enemies = [];
     bullets = [];
     explosions = [];
+    megaliths = createMegaliths(3, 5);
 
     player.position = [50, canvas.height / 2];
 };
+
+function createMegaliths(min, max) {
+    var megaliths = [];
+    var amount = randomInteger(min, max);
+
+    for (var i = 0; i < amount; i++) {
+        megaliths.push({
+            position: [randomInteger(0, 445), randomInteger(0, 447)],
+            sprite: new Sprite('img/sprites.png', [3, 213], [55, 53], 1, [0])
+        });
+    }
+
+
+    return megaliths;
+}
+
+function randomInteger(min, max) {
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
 
 resources.onCompleteLoad(initial);
 resources.load([
