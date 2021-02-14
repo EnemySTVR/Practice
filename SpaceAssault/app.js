@@ -241,14 +241,14 @@ function render() {
     context.fillStyle = terrainPattern;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    if (!isGameOver) {
-        renderEntity(player);
-    }
+    
 
 
     renderEntities(enemies);
     renderMannasScore()
-
+    if (!isGameOver) {
+        renderEntity(player);
+    }
     renderEntities(bullets);
     renderEntities(explosions);
     renderEntities(mannas);
