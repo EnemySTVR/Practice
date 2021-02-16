@@ -34,6 +34,7 @@ var terrainPattern;
 var mannasScore = 0;
 var score = 0;
 var scoreElement = document.getElementById('score');
+var mannasScoreElement = document.getElementById('mannas');
 
 var playerSpeed = 150;
 var bulletSpeed = 300;
@@ -76,11 +77,13 @@ function update(differenceOfTime) {
                 [0, 78],
                 [80, 39],
                 6,
-                [0, 1, 2, 3, 2, 1])
+                [0, 1, 2, 3, 2, 1]),
+            direction: ''
         });
     }
     checkCollisions(differenceOfTime);
     scoreElement.innerHTML = score;
+    mannasScoreElement.innerHTML = mannasScore;
 
     if (mannas.length < maxMannaAmount) {
         createManna();
@@ -178,10 +181,20 @@ function checkCollisions(differenceOfTime) {
 
             if (boxCollides(position, size, position2, size2)) {
                 if ((position[1] + size[1] / 2) > (position2[1] + size2[1] / 2)) {
-                    enemies[i].position[1] += enemySpeed * differenceOfTime;
+                    if (checkFreeWay('down', megaliths[j], enemies[i])) {
+                        enemies[i].position[1] += enemySpeed * differenceOfTime;
+                    } else {
+                        enemies[i].position[1] -= enemySpeed * differenceOfTime;
+                    }
+                    
                 } else {
-                    enemies[i].position[1] -= enemySpeed * differenceOfTime;
+                    if (checkFreeWay('up', megaliths[j], enemies[i])) {
+                        enemies[i].position[1] -= enemySpeed * differenceOfTime;
+                    } else {
+                        enemies[i].position[1] += enemySpeed * differenceOfTime;
+                    }
                 }
+                enemies[i].position[0] += enemySpeed * differenceOfTime;
             }
         }
         if (boxCollides(position, size, player.position, player.sprite.size)) {
@@ -221,6 +234,36 @@ function checkCollisions(differenceOfTime) {
     }
 }
 
+function checkFreeWay(direction, megalith, enemy) {
+    var result = true;
+    var checkingBox = {
+        position: [],
+        size: enemy.sprite.size
+    }
+    switch (direction) {
+        case 'up':
+            checkingBox.position = [megalith.position[0] + megalith.sprite.size[0], megalith.position[1] - enemy.sprite.size[1]];
+            megaliths.forEach(element => {
+                if (boxCollides(element.position, element.sprite.size, checkingBox.position, checkingBox.size)
+                    || checkingBox.position[1] < 0) {
+                    result = false;
+                }
+            });
+            break;
+        case 'down':
+            checkingBox.position = [megalith.position[0] + megalith.sprite.size[0], megalith.position[1] + megalith.sprite.size[1]];
+            megaliths.forEach(element => {
+                if (boxCollides(element.position, element.sprite.size, checkingBox.position, checkingBox.size)
+                    || checkingBox.position[1] > canvas.width) {
+                    result = false;
+                }
+            });
+            break;
+    }
+
+    return result;
+}
+
 function checkPlayerBounds() {
     if (player.position[0] < 0) {
         player.position[0] = 0;
@@ -241,11 +284,7 @@ function render() {
     context.fillStyle = terrainPattern;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    
-
-
     renderEntities(enemies);
-    renderMannasScore()
     if (!isGameOver) {
         renderEntity(player);
     }
@@ -262,13 +301,6 @@ function renderEntity(entity) {
     context.translate(entity.position[0], entity.position[1]);
     entity.sprite.render(context);
     context.restore();
-}
-
-function renderMannasScore() {
-    
-    context.font = "bold 42px Arial";
-    context.fillStyle = 'red';
-    context.fillText('Mannas collected: ' + mannasScore, 20, 50);
 }
 
 function renderEntities(array) {
@@ -374,11 +406,16 @@ function resetMegaliths(min, max) {
     }
 }
 
-function createMegalith() {
+function createMegalith() {4
+    var spriteIndex = randomInteger(0, 1);
+    var sprites = [
+        new Sprite('img/sprites.png', [3, 213], [55, 53], 1, [0]),
+        new Sprite('img/sprites.png', [5, 274], [48, 42], 1, [0])
+    ];
     outer: while (true) {
         var megalith = {
             position: [randomInteger(0, 445), randomInteger(0, 447)],
-            sprite: new Sprite('img/sprites.png', [3, 213], [55, 53], 1, [0])
+            sprite: sprites[spriteIndex]
         }
         if (boxCollides(megalith.position, megalith.sprite.size,
             player.position, player.sprite.size)) {
