@@ -186,7 +186,7 @@ function checkCollisions(differenceOfTime) {
                     } else {
                         enemies[i].position[1] -= enemySpeed * differenceOfTime;
                     }
-                    
+
                 } else {
                     if (checkFreeWay('up', megaliths[j], enemies[i])) {
                         enemies[i].position[1] -= enemySpeed * differenceOfTime;
@@ -254,7 +254,7 @@ function checkFreeWay(direction, megalith, enemy) {
             checkingBox.position = [megalith.position[0] + megalith.sprite.size[0], megalith.position[1] + megalith.sprite.size[1]];
             megaliths.forEach(element => {
                 if (boxCollides(element.position, element.sprite.size, checkingBox.position, checkingBox.size)
-                    || checkingBox.position[1] > canvas.width) {
+                    || checkingBox.position[1] + checkingBox.size[1] > canvas.width) {
                     result = false;
                 }
             });
@@ -402,11 +402,12 @@ function resetMegaliths(min, max) {
     var amount = randomInteger(min, max);
 
     for (var i = 0; i < amount; i++) {
-        createMegalith();        
+        createMegalith();
     }
 }
 
-function createMegalith() {4
+function createMegalith() {
+    4
     var spriteIndex = randomInteger(0, 1);
     var sprites = [
         new Sprite('img/sprites.png', [3, 213], [55, 53], 1, [0]),
@@ -423,7 +424,8 @@ function createMegalith() {4
         }
         for (var i = 0; i < megaliths.length; i++) {
             if (boxCollides(megaliths[i].position, megaliths[i].sprite.size,
-                megalith.position, megalith.sprite.size)) {
+                megalith.position, megalith.sprite.size)
+                || distanceBetween(megalith, megaliths[i]) < 150) {
                 continue outer;
             }
         }
@@ -472,6 +474,19 @@ function createManna() {
         mannas.push(manna);
         break outer;
     }
+}
+
+function distanceBetween(object1, object2) {
+    var object1CenterPoint = [object1.position[0] + object1.sprite.size[0] / 2, object1.position[1] + object1.sprite.size[1] / 2],
+        object2CenterPoint = [object2.position[0] + object2.sprite.size[0] / 2, object2.position[1] + object2.sprite.size[1] / 2];
+
+    return Math.sqrt(
+        Math.pow(
+            Math.abs(object1CenterPoint[0] - object2CenterPoint[0]), 2
+        ) + Math.pow(
+            Math.abs(object1CenterPoint[1] - object2CenterPoint[1]), 2
+        )
+    );
 }
 
 function randomInteger(min, max) {
