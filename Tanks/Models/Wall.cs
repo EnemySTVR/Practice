@@ -11,11 +11,11 @@ namespace Tanks.Models
     {
         public Wall() : base()
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\wall.png");
+            Sprite = Properties.Resources.wall;
         }
         public Wall(Point coordinates) : base(coordinates)
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\wall.png");
+            Sprite = Properties.Resources.wall;
         }
     }
 }

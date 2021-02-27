@@ -11,11 +11,11 @@ namespace Tanks.Models
     {
         public River() : base()
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\river.png");
+            Sprite = Properties.Resources.river;
         }
         public River(Point coordinates) : base(coordinates)
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\river.png");
+            Sprite = Properties.Resources.river;
         }
     }
 }

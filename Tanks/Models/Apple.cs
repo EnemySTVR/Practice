@@ -11,11 +11,11 @@ namespace Tanks.Models
     {
         public Apple() : base()
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\apple.png");
+            Sprite = Properties.Resources.apple;
         }
         public Apple(Point coordinates) : base(coordinates)
         {
-            Sprite = new Bitmap(@"..\\..\\..\\img\\apple.png");
+            Sprite = Properties.Resources.apple;
         }
     }
 }

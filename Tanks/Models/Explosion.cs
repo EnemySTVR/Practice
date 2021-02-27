@@ -9,9 +9,9 @@ namespace Tanks.Models
 {
     class Explosion : Entity
     {
-        private readonly Bitmap smallExplosion = new Bitmap(@"..\..\..\img\smallExplosion.png");
-        private readonly Bitmap mediumExplosion = new Bitmap(@"..\..\..\img\mediumExplosion.png");
-        private readonly Bitmap bigExplosion = new Bitmap(@"..\..\..\img\bigExplosion.png");
+        private readonly Bitmap smallExplosion = Properties.Resources.smallExplosion;
+        private readonly Bitmap mediumExplosion = Properties.Resources.mediumExplosion;
+        private readonly Bitmap bigExplosion = Properties.Resources.bigExplosion;
         private int counter;
 
         public override Bitmap Sprite

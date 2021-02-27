@@ -24,14 +24,28 @@ namespace Tanks.Controller
         private List<Bullet> bullets;
         private List<Explosion> explosions;
         private readonly Random random = new Random();
-        private bool GameOver;
+        private bool gameOver;
         private readonly Timer shotTimer = new Timer();
         private readonly BindingSource infoSource = new BindingSource();
         private List<Entity> allEntities;
+        private int tanksScore;
+        private int applesScore;
+        private bool gameResult;
+        private int gameOverDelay;
 
+        internal bool GetGameResult()
+        {
+            return gameResult;
+        }
 
         internal void Initial(int tanksValue, int applesValue, Size mapSize)
         {
+            gameOver = false;
+            gameOverDelay = 0;
+
+            tanksScore = 0;
+            applesScore = 0;
+
             this.tanksValue = tanksValue;
             this.applesValue = applesValue;
             this.mapSize = mapSize;
@@ -98,21 +112,6 @@ namespace Tanks.Controller
             }
 
             bullets = new List<Bullet>();
-            shotTimer.Interval = 5000 / tanks.Count;
-            shotTimer.Tick += delegate (object obj, EventArgs args)
-            {
-                var randomTankIndex = random.Next(0, tanks.Count);
-                var randomTank = tanks[randomTankIndex];
-                var bullet = new Bullet(randomTank.Direction);
-                var spawnCoordinates = new Point
-                {
-                    X = randomTank.Coordinates.X + randomTank.Sprite.Width / 2 - bullet.Sprite.Width / 2,
-                    Y = randomTank.Coordinates.Y + randomTank.Sprite.Height / 2 - bullet.Sprite.Height / 2
-                };
-                bullet.Coordinates = spawnCoordinates;
-                bullets.Add(bullet);
-            };
-            shotTimer.Start();
 
             explosions = new List<Explosion>();
 
@@ -125,6 +124,7 @@ namespace Tanks.Controller
             allEntities.AddRange(bullets);
             allEntities.AddRange(explosions);
             UpdateInfoSource();
+
         }
 
         internal void Initial()
@@ -176,6 +176,7 @@ namespace Tanks.Controller
                 explosions.Add(new Explosion(target.Coordinates));
                 if (target is Tank)
                 {
+                    tanksScore++;
                     var tank = target as Tank;
                     tanks.Remove(tank);
                 }
@@ -183,6 +184,7 @@ namespace Tanks.Controller
                 {
                     var wall = target as Wall;
                     walls.Remove(wall);
+
                 }
                
             }
@@ -195,7 +197,7 @@ namespace Tanks.Controller
         internal Bitmap GetNextBitmap(Size mapSize)
         {
             PerformGameLoop();
-            if (!GameOver)
+            if (!gameOver || gameOverDelay < 10)
             {
                 var bitmap = new Bitmap(mapSize.Width, mapSize.Height);
                 var graphics = Graphics.FromImage(bitmap);
@@ -217,11 +219,17 @@ namespace Tanks.Controller
                         graphics.DrawLine(pen, lazer.StartPoint, lazer.EndPoint);
                     }
                 }
-                graphics.DrawImage(kolobok.Sprite, kolobok.Coordinates);
-                
-                foreach (var tank in tanks)
+                if (kolobok != null)
                 {
-                    graphics.DrawImage(tank.Sprite, tank.Coordinates);
+                    graphics.DrawImage(kolobok.Sprite, kolobok.Coordinates);
+                }
+                
+                if (tanks.Count > 0)
+                {
+                    foreach (var tank in tanks)
+                    {
+                        graphics.DrawImage(tank.Sprite, tank.Coordinates);
+                    }
                 }
                 
                 foreach (var wall in walls)
@@ -253,13 +261,41 @@ namespace Tanks.Controller
 
         private void PerformGameLoop()
         {
+            if (gameOver)
+            {
+                gameOverDelay++;
+                return;
+            }
+            if (tanks.Count == 0)
+            {
+                gameResult = true;
+                gameOver = true;
+                gameOverDelay++;
+                return;
+            }
             if (!CheckMapBoundary(kolobok))
             {
                 kolobok.MakeAStep();
             }
+            else
+            {
+                kolobok.TurnAround();
+            }
 
             foreach (var tank in tanks)
             {
+                if (tank.ReadyToShot)
+                {
+                    var bullet = new Bullet(tank.Direction);
+                    var spawnCoordinates = new Point
+                    {
+                        X = tank.Coordinates.X + tank.Sprite.Width / 2 - bullet.Sprite.Width / 2,
+                        Y = tank.Coordinates.Y + tank.Sprite.Height / 2 - bullet.Sprite.Height / 2
+                    };
+                    bullet.Coordinates = spawnCoordinates;
+                    bullets.Add(bullet);
+                }
+
                 if (!CheckMapBoundary(tank))
                 {
                     
@@ -320,11 +356,20 @@ namespace Tanks.Controller
 
         private void CheckCollizions()
         {
+            if (gameOver)
+            {
+                return;
+            }
+
             foreach (var tank in tanks)
             {
                 if (IsCollize(tank, kolobok))
                 {
-                    GameOver = true;
+                    explosions.Add(new Explosion(kolobok.Coordinates));
+                    kolobok = null;
+                    gameOver = true;
+                    gameResult = false;
+                    return;
                 }
 
                 foreach (var otherTank in tanks)
@@ -348,6 +393,12 @@ namespace Tanks.Controller
                         tank.GoBack();
                         tank.SetRandomDirection();
                     }
+
+                    if (IsCollize(kolobok, wall))
+                    {
+                        kolobok.GoBack();
+                        kolobok.TurnAround();
+                    }
                 }
                 foreach (var river in rivers)
                 {
@@ -356,23 +407,13 @@ namespace Tanks.Controller
                         tank.GoBack();
                         tank.SetRandomDirection();
                     }
+                    if (IsCollize(kolobok, river))
+                    {
+                        kolobok.GoBack();
+                        kolobok.TurnAround();
+                    }
                 }
                 
-            }
-            foreach (var wall in walls)
-            {
-                if (IsCollize(kolobok, wall))
-                {
-                    kolobok.GoBack();
-                }
-            }
-            foreach (var river in rivers)
-            {
-                if (IsCollize(kolobok, river))
-                {
-                    kolobok.GoBack();
-
-                }
             }
             for (var i = 0; i < apples.Count; i++)
             {
@@ -382,6 +423,7 @@ namespace Tanks.Controller
                 }
                 if (IsCollize(kolobok, apples[i]))
                 {
+                    applesScore++;
                     apples.Remove(apples[i]);
                     i--;
                     var apple = new Apple();
@@ -406,7 +448,12 @@ namespace Tanks.Controller
                 }
                 if (IsCollize(bullets[i], kolobok))
                 {
-                    GameOver = true;
+                    explosions.Add(new Explosion(kolobok.Coordinates));
+                    kolobok = null;
+                    bullets.Remove(bullets[i]);
+                    gameResult = false;
+                    gameOver = true;
+                    return;
                 }
                 for (var j = 0; j < walls.Count; j++)
                 {
@@ -474,11 +521,14 @@ namespace Tanks.Controller
             }
             return null;
         }
+
         private Entity SearchLazerTarget(Point startPoint, Direction direction)
         {
             Entity result = null;
             var pointer = new Rectangle(startPoint, new Size(1, 1));
-
+            var potentialTargets = new List<Entity>();
+            potentialTargets.AddRange(tanks);
+            potentialTargets.AddRange(walls);
 
             switch (direction)
             {
@@ -486,12 +536,7 @@ namespace Tanks.Controller
                     while (pointer.X > 0)
                     {
                         pointer.X--;
-                        result = SearchCollizedEntity(tanks, pointer);
-                        if (result != null)
-                        {
-                            return result;
-                        }
-                        result = SearchCollizedEntity(walls, pointer);
+                        result = SearchCollizedEntity(potentialTargets, pointer);
                         if (result != null)
                         {
                             return result;
@@ -502,12 +547,7 @@ namespace Tanks.Controller
                     while (pointer.Y > 0)
                     {
                         pointer.Y--;
-                        result = SearchCollizedEntity(tanks, pointer);
-                        if (result != null)
-                        {
-                            return result;
-                        }
-                        result = SearchCollizedEntity(walls, pointer);
+                        result = SearchCollizedEntity(potentialTargets, pointer);
                         if (result != null)
                         {
                             return result;
@@ -518,12 +558,7 @@ namespace Tanks.Controller
                     while (pointer.X < mapSize.Width)
                     {
                         pointer.X++;
-                        result = SearchCollizedEntity(tanks, pointer);
-                        if (result != null)
-                        {
-                            return result;
-                        }
-                        result = SearchCollizedEntity(walls, pointer);
+                        result = SearchCollizedEntity(potentialTargets, pointer);
                         if (result != null)
                         {
                             return result;
@@ -534,12 +569,7 @@ namespace Tanks.Controller
                     while (pointer.Y < mapSize.Height)
                     {
                         pointer.Y++;
-                        result = SearchCollizedEntity(tanks, pointer);
-                        if (result != null)
-                        {
-                            return result;
-                        }
-                        result = SearchCollizedEntity(walls, pointer);
+                        result = SearchCollizedEntity(potentialTargets, pointer);
                         if (result != null)
                         {
                             return result;
@@ -549,19 +579,6 @@ namespace Tanks.Controller
             }
 
             return result;
-        }
-
-        internal void Reset()
-        {
-            kolobok = null;
-            lazer = null;
-            tanks = null;
-            apples = null;
-            walls = null;
-            rivers = null;
-            bullets = null;
-            explosions = null;
-            GameOver = false;
         }
 
         public BindingSource GetInformationSource()
@@ -577,6 +594,11 @@ namespace Tanks.Controller
                 infoList.Add(new InfoItem(entity));
             }
             infoSource.DataSource = infoList;
+        }
+
+        public string GetScores()
+        {
+            return $"tanks: {tanksScore}    apples: {applesScore}";
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Tanks.Models
 {
     class Bullet : MobileEntity
     {
-        private readonly Bitmap leftStepSprite = new Bitmap(@"..\..\..\img\bullet_left.png");
-        private readonly Bitmap upStepSprite = new Bitmap(@"..\..\..\img\bullet_up.png");
-        private readonly Bitmap rightStepSprite = new Bitmap(@"..\..\..\img\bullet_right.png");
-        private readonly Bitmap downStepSprite = new Bitmap(@"..\..\..\img\bullet_down.png");
+        private readonly Bitmap leftStepSprite =  Properties.Resources.bullet_left;
+        private readonly Bitmap upStepSprite = Properties.Resources.bullet_up;
+        private readonly Bitmap rightStepSprite = Properties.Resources.bullet_right;
+        private readonly Bitmap downStepSprite = Properties.Resources.bullet_down;
 
         public Bullet(Direction direction) : base()
         {
@@ -49,8 +49,21 @@ namespace Tanks.Models
 
         internal override void MakeAStep()
         {
-            base.MakeAStep();
-            base.MakeAStep();
+            switch (direction)
+            {
+                case Direction.Left:
+                    Coordinates.X -= 2;
+                    break;
+                case Direction.Up:
+                    Coordinates.Y -= 2;
+                    break;
+                case Direction.Right:
+                    Coordinates.X += 2;
+                    break;
+                case Direction.Down:
+                    Coordinates.Y += 2;
+                    break;
+            }
         }
     }
 }

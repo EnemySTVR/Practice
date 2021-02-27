@@ -9,12 +9,12 @@ namespace Tanks.Models
 {
     class Kolobok : MobileEntity
     {
-        private readonly Bitmap leftStepsSprite = new Bitmap(@"..\..\..\img\kolobok_left.png");
-        private readonly Bitmap upAfterLeftStepsSprite = new Bitmap(@"..\..\..\img\kolobok_up_after_left.png");
-        private readonly Bitmap downAfterLeftStepsSprite = new Bitmap(@"..\..\..\img\kolobok_down_after_left.png");
-        private readonly Bitmap rightStepsSprite = new Bitmap(@"..\..\..\img\kolobok_right.png");
-        private readonly Bitmap upAfterRightStepsSprite = new Bitmap(@"..\..\..\img\kolobok_up_after_right.png");
-        private readonly Bitmap downAfterRightStepsSprite = new Bitmap(@"..\..\..\img\kolobok_down_after_right.png");
+        private readonly Bitmap leftStepsSprite =Properties.Resources.kolobok_left;
+        private readonly Bitmap upAfterLeftStepsSprite =Properties.Resources.kolobok_up_after_left;
+        private readonly Bitmap downAfterLeftStepsSprite =Properties.Resources.kolobok_down_after_left;
+        private readonly Bitmap rightStepsSprite =Properties.Resources.kolobok_right;
+        private readonly Bitmap upAfterRightStepsSprite =Properties.Resources.kolobok_up_after_right;
+        private readonly Bitmap downAfterRightStepsSprite =Properties.Resources.kolobok_down_after_right;
 
         public Kolobok() : base()
         {
@@ -57,6 +57,25 @@ namespace Tanks.Models
                         break;
                 }
                 base.Direction = value;
+            }
+        }
+
+        public void TurnAround()
+        {
+            switch (Direction)
+            {
+                case Direction.Left:
+                    Direction = Direction.Right;
+                    break;
+                case Direction.Up:
+                    Direction = Direction.Down;
+                    break;
+                case Direction.Right:
+                    Direction = Direction.Left;
+                    break;
+                case Direction.Down:
+                    Direction = Direction.Up;
+                    break;
             }
         }
     }

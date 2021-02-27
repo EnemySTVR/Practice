@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Tanks.Controller;
 
@@ -10,27 +11,26 @@ namespace Tanks
     public partial class GameForm : Form
     {
         private readonly PackmanController controller;
-        private readonly Form informationForm;
+        private Form informationForm;
         
 
         public GameForm(int width, int height, int tanksValue, int appleValue)
         {
             InitializeComponent();
             controller = new PackmanController();
-            ClientSize = new Size(width, height);
-            MinimumSize = new Size(width + 16, height + 39);
+            ClientSize = new Size(width, height + 30);
+            MinimumSize = new Size(width + 16, height + 69);
             GameMapPictureBox.Size = new Size(width, height);
 
             controller.Initial(tanksValue, appleValue, GameMapPictureBox.Size);
             GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);
-
-            informationForm = new InformationForm(controller.GetInformationSource());
-            informationForm.Show();
         }
 
 
         private void StartGame_Click(object sender, EventArgs e)
         {
+            GameResultLabel.Visible = false;
+            mock.Select();
             Timer timer = new Timer();
             MenuImage.Hide();
             StartButton.Hide();
@@ -41,16 +41,27 @@ namespace Tanks
                 if (nextBitmap != null)
                 {
                     GameMapPictureBox.Image = nextBitmap;
+                    ScoresLabel.Text = controller.GetScores();
+
                 }
                 else
                 {
                     timer.Stop();
-                    controller.Reset();
-                    
+                    if (controller.GetGameResult())
+                    {
+                        GameResultLabel.Text = "Ты победил!";
+                    }
+                    else
+                    {
+                        GameResultLabel.Text = "Ты проиграл!";
+                    }
+                    GameResultLabel.Visible = true;
                     controller.Initial();
                     GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);
+                    ScoresLabel.Text = controller.GetScores();
                     MenuImage.Show();
                     StartButton.Show();
+                    StartButton.Select();
 
                 }
                 
@@ -60,7 +71,7 @@ namespace Tanks
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyValue)
+             switch (e.KeyValue)
             {
                 case (char)Keys.Left:
                     controller.ChangePlayerDirection(Direction.Left);
@@ -80,5 +91,10 @@ namespace Tanks
             }
         }
 
+        private void OpenInfoPanel_Click(object sender, EventArgs e)
+        {
+            informationForm = new InformationForm(controller.GetInformationSource());
+            informationForm.Show();
+        }
     }
 }

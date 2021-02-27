@@ -9,20 +9,44 @@ namespace Tanks.Models
 {
     class Tank : MobileEntity
     {
-        private readonly Bitmap leftStepSprite = new Bitmap(@"..\..\..\img\tank_left.png");
-        private readonly Bitmap upStepSprite = new Bitmap(@"..\..\..\img\tank_up.png");
-        private readonly Bitmap rightStepSprite = new Bitmap(@"..\..\..\img\tank_right.png");
-        private readonly Bitmap downStepSprite = new Bitmap(@"..\..\..\img\tank_down.png");
-        private int stepCounter;
+        private readonly Bitmap leftStepSprite = Properties.Resources.tank_left;
+        private readonly Bitmap upStepSprite = Properties.Resources.tank_up;
+        private readonly Bitmap rightStepSprite = Properties.Resources.tank_right;
+        private readonly Bitmap downStepSprite = Properties.Resources.tank_down;
+        private int changeDirectionDelay;
+        private int changeDirectionCounter  = 0;
+        private Random random = new Random();
+        private int shotDelay;
+        private int shotTimeCounter = 0;
+
+        public bool ReadyToShot
+        {
+            get
+            {
+                if (shotTimeCounter == shotDelay)
+                {
+                    shotDelay = random.Next(30, 150);
+                    shotTimeCounter = 0;
+                    return true;
+                }
+                else
+                {
+                    shotTimeCounter++;
+                    return false;
+                }
+            }
+        }
         public Tank() : base()
         {
+            shotDelay = random.Next(30, 100);
+            changeDirectionDelay = random.Next(10, 30);
             SetRandomDirection();
-            stepCounter = 0;
         }
         public Tank(Point coordinates) : base(coordinates)
         {
+            shotDelay = random.Next(1000, 3000);
             SetRandomDirection();
-            stepCounter = 0;
+            changeDirectionCounter = 0;
         }
 
         public override Direction Direction
@@ -52,19 +76,19 @@ namespace Tanks.Models
         internal override void MakeAStep()
         {
             base.MakeAStep();
-            stepCounter++;
-            if (stepCounter == 15)
+            changeDirectionCounter++;
+            if (changeDirectionCounter == changeDirectionDelay)
             {
                 SetRandomDirection();
-                stepCounter = 0;
+                changeDirectionDelay = random.Next(10, 30);
+                changeDirectionCounter = 0;
             }
             
         }
 
         public void SetRandomDirection()
         {
-            int random = new Random().Next(0, 4);
-            var randomDirection = random switch
+            var randomDirection = random.Next(0, 4) switch
             {
                 0 => Direction.Left,
                 1 => Direction.Up,

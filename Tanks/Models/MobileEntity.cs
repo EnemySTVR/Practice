@@ -12,7 +12,7 @@ namespace Tanks.Models
         public MobileEntity() : base() { }
         public MobileEntity(Point coordinates) : base(coordinates) { }
 
-        private Direction direction;
+        protected Direction direction;
 
         public virtual Direction Direction
         {
