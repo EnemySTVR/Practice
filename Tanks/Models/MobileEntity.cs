@@ -9,6 +9,7 @@ namespace Tanks.Models
 {
     class MobileEntity : Entity
     {
+        protected int step = 1;
         public MobileEntity() : base() { }
         public MobileEntity(Point coordinates) : base(coordinates) { }
 
@@ -30,16 +31,16 @@ namespace Tanks.Models
             switch (direction)
             {
                 case Direction.Left:
-                    Coordinates.X--;
+                    Coordinates.X -= step;
                     break;
                 case Direction.Up:
-                    Coordinates.Y--;
+                    Coordinates.Y -= step;
                     break;
                 case Direction.Right:
-                    Coordinates.X++;
+                    Coordinates.X += step;
                     break;
                 case Direction.Down:
-                    Coordinates.Y++;
+                    Coordinates.Y += step;
                     break;
             }
         }
@@ -49,16 +50,16 @@ namespace Tanks.Models
             switch (direction)
             {
                 case Direction.Left:
-                    Coordinates.X++;
+                    Coordinates.X += step;
                     break;
                 case Direction.Up:
-                    Coordinates.Y++;
+                    Coordinates.Y += step;
                     break;
                 case Direction.Right:
-                    Coordinates.X--;
+                    Coordinates.X -= step;
                     break;
                 case Direction.Down:
-                    Coordinates.Y--;
+                    Coordinates.Y -= step;
                     break;
             }
         }

@@ -75,7 +75,6 @@ namespace Tanks.Models
 
         internal override void MakeAStep()
         {
-            base.MakeAStep();
             if ((direction == Direction.Down || direction == Direction.Up) && Coordinates.Y % Sprite.Size.Height == 0)
             {
                 changeDirectionCounter++;
@@ -90,7 +89,7 @@ namespace Tanks.Models
                 changeDirectionDelay = random.Next(1, 10);
                 changeDirectionCounter = 0;
             }
-            
+            base.MakeAStep();
         }
 
         public void SetRandomDirection()

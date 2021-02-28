@@ -13,14 +13,17 @@ namespace Tanks.Models
         private readonly Bitmap upStepSprite = Properties.Resources.bullet_up;
         private readonly Bitmap rightStepSprite = Properties.Resources.bullet_right;
         private readonly Bitmap downStepSprite = Properties.Resources.bullet_down;
+        
 
         public Bullet(Direction direction) : base()
         {
             Direction = direction;
+            step = step * 2;
         }
         public Bullet(Direction direction, Point coordinates) : base(coordinates)
         {
             Direction = direction;
+            step = step * 2;
         }
 
         public override Direction Direction
@@ -44,25 +47,6 @@ namespace Tanks.Models
                         break;
                 }
                 base.Direction = value;
-            }
-        }
-
-        internal override void MakeAStep()
-        {
-            switch (direction)
-            {
-                case Direction.Left:
-                    Coordinates.X -= 2;
-                    break;
-                case Direction.Up:
-                    Coordinates.Y -= 2;
-                    break;
-                case Direction.Right:
-                    Coordinates.X += 2;
-                    break;
-                case Direction.Down:
-                    Coordinates.Y += 2;
-                    break;
             }
         }
     }
