@@ -14,7 +14,10 @@ namespace Tanks
         [STAThread]
         static void Main(string[] args)
         {
-            args = new string[] { "621", "369", "5", "5"};
+            if (args.Length == 0)
+            {
+                args = new string[] { "621", "369", "5", "5" };
+            }
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
