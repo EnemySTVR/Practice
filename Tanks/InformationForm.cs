@@ -12,10 +12,12 @@ namespace Tanks
 {
     public partial class InformationForm : Form
     {
-        public InformationForm(BindingSource source)
+        public InformationForm(DataTable source)
         {
             InitializeComponent();
             dataGridView1.DataSource = source;
+            dataGridView1.Columns["Id"].Visible = false;
+
         }
     }
 }

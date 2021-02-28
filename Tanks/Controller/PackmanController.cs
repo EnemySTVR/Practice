@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,15 +24,42 @@ namespace Tanks.Controller
         private List<River> rivers;
         private List<Bullet> bullets;
         private List<Explosion> explosions;
-        private readonly Random random = new Random();
+        private readonly Random random;
         private bool gameOver;
-        private readonly Timer shotTimer = new Timer();
-        private readonly BindingSource infoSource = new BindingSource();
-        private List<Entity> allEntities;
+        private readonly Timer shotTimer;
+        private readonly DataTable infoSource;
         private int tanksScore;
         private int applesScore;
         private bool gameResult;
         private int gameOverDelay;
+
+        public PackmanController()
+        {
+            shotTimer = new Timer();
+            random = new Random();
+            infoSource = new DataTable();
+
+            var IdColumn = new DataColumn();
+            IdColumn.DataType = typeof(int);
+            IdColumn.ColumnName = "Id";
+            infoSource.Columns.Add(IdColumn);
+
+            var NameColumn = new DataColumn();
+            NameColumn.DataType = typeof(string);
+            NameColumn.ColumnName = "Name";
+            infoSource.Columns.Add(NameColumn);
+
+            var XColumn = new DataColumn();
+            XColumn.DataType = typeof(int);
+            XColumn.ColumnName = "X";
+            infoSource.Columns.Add(XColumn);
+
+            var YColumn = new DataColumn();
+            YColumn.DataType = typeof(int);
+            YColumn.ColumnName = "Y";
+            infoSource.Columns.Add(YColumn);
+        }
+
 
         internal bool GetGameResult()
         {
@@ -40,6 +68,8 @@ namespace Tanks.Controller
 
         internal void Initial(int tanksValue, int applesValue, Size mapSize)
         {
+            infoSource.Rows.Clear();
+
             gameOver = false;
             gameOverDelay = 0;
 
@@ -51,6 +81,7 @@ namespace Tanks.Controller
             this.mapSize = mapSize;
 
             kolobok = new Kolobok();
+            AddToInfoSource(kolobok);
 
             rivers = new List<River>();
             for (var i = 0; i < 5; i++)
@@ -62,6 +93,8 @@ namespace Tanks.Controller
                     SetRandonCoordinates(river);
                 }
                 rivers.Add(river);
+                AddToInfoSource(river);
+
             }
 
             walls = new List<Wall>();
@@ -76,10 +109,11 @@ namespace Tanks.Controller
                     SetRandonCoordinates(wall);
                 }
                 walls.Add(wall);
+                AddToInfoSource(wall);
             }
 
             tanks = new List<Tank>();
-            var kolobokSpawnTrigger = new Rectangle(0, 0, 50, 50);
+            var kolobokSpawnAreaTrigger = new Rectangle(0, 0, 50, 50);
             for (var i = 0; i < tanksValue; i++)
             {
                 var tank = new Tank();
@@ -88,11 +122,12 @@ namespace Tanks.Controller
                        IsCollize(tank, rivers) ||
                        IsCollize(tank, walls) ||
                        IsCollize(tank, tanks) ||
-                       IsCollize(tank, kolobokSpawnTrigger))
+                       IsCollize(tank, kolobokSpawnAreaTrigger))
                 {
                     SetRandonCoordinates(tank);
                 }
                 tanks.Add(tank);
+                AddToInfoSource(tank);
             }
 
             apples = new List<Apple>();
@@ -109,22 +144,13 @@ namespace Tanks.Controller
                     SetRandonCoordinates(apple);
                 }
                 apples.Add(apple);
+                AddToInfoSource(apple);
             }
 
             bullets = new List<Bullet>();
-
             explosions = new List<Explosion>();
 
-            allEntities = new List<Entity>();
-            allEntities.Add(kolobok);
-            allEntities.AddRange(tanks);
-            allEntities.AddRange(apples);
-            allEntities.AddRange(walls);
-            allEntities.AddRange(rivers);
-            allEntities.AddRange(bullets);
-            allEntities.AddRange(explosions);
             UpdateInfoSource();
-
         }
 
         internal void Initial()
@@ -134,7 +160,7 @@ namespace Tanks.Controller
 
         internal void ChangePlayerDirection(Direction direction)
         {
-            kolobok.Direction = direction;
+            kolobok.ChangeDirection(direction);
         }
 
         internal void KolobokShot()
@@ -173,16 +199,20 @@ namespace Tanks.Controller
             {
                 endPoint.X = target.Coordinates.X + target.Sprite.Width / 2;
                 endPoint.Y = target.Coordinates.Y + target.Sprite.Height / 2;
-                explosions.Add(new Explosion(target.Coordinates));
+                var explosion = new Explosion(target.Coordinates);
+                explosions.Add(explosion);
+                AddToInfoSource(explosion);
                 if (target is Tank)
                 {
                     tanksScore++;
                     var tank = target as Tank;
+                    RemoveFromInfoSource(tank.Id);
                     tanks.Remove(tank);
                 }
                 if (target is Wall)
                 {
                     var wall = target as Wall;
+                    RemoveFromInfoSource(wall.Id);
                     walls.Remove(wall);
 
                 }
@@ -294,6 +324,7 @@ namespace Tanks.Controller
                     };
                     bullet.Coordinates = spawnCoordinates;
                     bullets.Add(bullet);
+                    AddToInfoSource(bullet);
                 }
 
                 if (!CheckMapBoundary(tank))
@@ -316,14 +347,16 @@ namespace Tanks.Controller
                     }
                     else
                     {
+                        RemoveFromInfoSource(bullets[i].Id);
                         bullets.Remove(bullets[i]);
                         i--;
                     }
                 }
             }
 
-            if (explosions.Count > 10)
+            if (explosions.Count > 5)
             {
+                RemoveFromInfoSource(explosions[0].Id);
                 explosions.Remove(explosions[0]);
             }
 
@@ -365,7 +398,10 @@ namespace Tanks.Controller
             {
                 if (IsCollize(tank, kolobok))
                 {
-                    explosions.Add(new Explosion(kolobok.Coordinates));
+                    var explosion = new Explosion(kolobok.Coordinates);
+                    explosions.Add(explosion);
+                    AddToInfoSource(explosion);
+                    RemoveFromInfoSource(kolobok.Id);
                     kolobok = null;
                     gameOver = true;
                     gameResult = false;
@@ -424,6 +460,7 @@ namespace Tanks.Controller
                 if (IsCollize(kolobok, apples[i]))
                 {
                     applesScore++;
+                    RemoveFromInfoSource(apples[i].Id);
                     apples.Remove(apples[i]);
                     i--;
                     var apple = new Apple();
@@ -437,6 +474,7 @@ namespace Tanks.Controller
                         SetRandonCoordinates(apple);
                     }
                     apples.Add(apple);
+                    AddToInfoSource(apple);
                     continue;
                 }
             }
@@ -448,8 +486,12 @@ namespace Tanks.Controller
                 }
                 if (IsCollize(bullets[i], kolobok))
                 {
-                    explosions.Add(new Explosion(kolobok.Coordinates));
+                    var explosion = new Explosion(kolobok.Coordinates);
+                    explosions.Add(explosion);
+                    AddToInfoSource(explosion);
+                    RemoveFromInfoSource(kolobok.Id);
                     kolobok = null;
+                    RemoveFromInfoSource(bullets[i].Id);
                     bullets.Remove(bullets[i]);
                     gameResult = false;
                     gameOver = true;
@@ -461,7 +503,10 @@ namespace Tanks.Controller
                     {
                         var explosion = new Explosion(walls[j].Coordinates);
                         explosions.Add(explosion);
+                        AddToInfoSource(explosion);
+                        RemoveFromInfoSource(bullets[i].Id);
                         bullets.Remove(bullets[i]);
+                        RemoveFromInfoSource(walls[j].Id);
                         walls.Remove(walls[j]);
                         i--;
                         break;
@@ -505,6 +550,8 @@ namespace Tanks.Controller
                 X = random.Next(0, mapSize.Width - entity.Sprite.Width),
                 Y = random.Next(0, mapSize.Height - entity.Sprite.Height)
             };
+            randomCoordinates.X -= randomCoordinates.X % 15;
+            randomCoordinates.Y -= randomCoordinates.Y % 15;
             entity.Coordinates = randomCoordinates;
         }
 
@@ -581,19 +628,53 @@ namespace Tanks.Controller
             return result;
         }
 
-        public BindingSource GetInformationSource()
+        public DataTable GetInformationSource()
         {
             return infoSource;
         }
 
         private void UpdateInfoSource()
         {
-            var infoList = new List<InfoItem>();
-            foreach (var entity in allEntities)
+            UpdateInfoSource(kolobok);
+            UpdateInfoSource(tanks);
+            UpdateInfoSource(bullets);
+
+        }
+
+        private void UpdateInfoSource(Entity entity)
+        {
+            if (entity == null)
             {
-                infoList.Add(new InfoItem(entity));
+                return;
             }
-            infoSource.DataSource = infoList;
+            var row = infoSource.Select($"Id = {entity.Id}").FirstOrDefault();
+            row["X"] = ((Entity)entity).Coordinates.X;
+            row["Y"] = ((Entity)entity).Coordinates.Y;
+        }
+
+        private void UpdateInfoSource<T>(List<T> list)
+        {
+            foreach (var entity in list)
+            {
+                UpdateInfoSource(entity as Entity);
+            }
+        }
+
+        private void AddToInfoSource(Entity entity)
+        {
+            var row = infoSource.NewRow();
+            row["Id"] = entity.Id;
+            row["Name"] = entity.GetType().Name;
+            row["X"] = entity.Coordinates.X;
+            row["Y"] = entity.Coordinates.Y;
+
+            infoSource.Rows.Add(row);
+        }
+
+        private void RemoveFromInfoSource(int id)
+        {
+            var row = infoSource.Select($"Id = {id}")[0];
+            infoSource.Rows.Remove(row);
         }
 
         public string GetScores()

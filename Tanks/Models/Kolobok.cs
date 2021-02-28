@@ -15,12 +15,16 @@ namespace Tanks.Models
         private readonly Bitmap rightStepsSprite =Properties.Resources.kolobok_right;
         private readonly Bitmap upAfterRightStepsSprite =Properties.Resources.kolobok_up_after_right;
         private readonly Bitmap downAfterRightStepsSprite =Properties.Resources.kolobok_down_after_right;
+        private Direction targetDirection = Direction.Right;
 
         public Kolobok() : base()
         {
             Direction = Direction.Right;
         }
-        public Kolobok(Point coordinates) : base(coordinates) { }
+        public Kolobok(Point coordinates) : base(coordinates)
+        {
+            Direction = Direction.Right;
+        }
 
         public override Direction Direction
         {
@@ -66,17 +70,40 @@ namespace Tanks.Models
             {
                 case Direction.Left:
                     Direction = Direction.Right;
+                    targetDirection = Direction.Right;
                     break;
                 case Direction.Up:
                     Direction = Direction.Down;
+                    targetDirection = Direction.Down;
                     break;
                 case Direction.Right:
                     Direction = Direction.Left;
+                    targetDirection = Direction.Left;
                     break;
                 case Direction.Down:
                     Direction = Direction.Up;
+                    targetDirection = Direction.Up;
                     break;
             }
+        }
+
+        internal void ChangeDirection(Direction direction)
+        {
+            targetDirection = direction;
+        }
+
+        internal override void MakeAStep()
+        {
+
+            if (targetDirection != Direction)
+            {
+                if (((Direction == Direction.Down || Direction == Direction.Up) && Coordinates.Y % 15 == 0) ||
+                    ((Direction == Direction.Left || Direction == Direction.Right) && Coordinates.X % 15 == 0))
+                {
+                        Direction = targetDirection;
+                }
+            }
+            base.MakeAStep();
         }
     }
 }
