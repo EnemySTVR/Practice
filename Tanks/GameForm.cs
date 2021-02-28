@@ -12,15 +12,21 @@ namespace Tanks
     {
         private readonly PackmanController controller;
         private Form informationForm;
-        
+        private int width;
+        private int height;
+
+
 
         public GameForm(int width, int height, int tanksValue, int appleValue)
         {
+            this.width = width - width % 15;
+            this.height = height - height % 15;
             InitializeComponent();
             controller = new PackmanController();
-            ClientSize = new Size(width, height + 30);
-            MinimumSize = new Size(width + 16, height + 69);
-            GameMapPictureBox.Size = new Size(width, height);
+            ClientSize = new Size(this.width, this.height + 30);
+            MinimumSize = new Size(this.width + 16, this.height + 69);
+            GameMapPictureBox.Size = new Size(this.width, this.height);
+            GameMapPictureBox.Location = new Point(0, 30);
 
             controller.Initial(tanksValue, appleValue, GameMapPictureBox.Size);
             GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);

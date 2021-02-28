@@ -309,6 +309,7 @@ namespace Tanks.Controller
             }
             else
             {
+                kolobok.GoBack();
                 kolobok.TurnAround();
             }
 
@@ -334,6 +335,7 @@ namespace Tanks.Controller
                 }
                 else
                 {
+                    tank.GoBack();
                     tank.SetRandomDirection();
                 }
             }
@@ -366,20 +368,20 @@ namespace Tanks.Controller
 
         private bool CheckMapBoundary(MobileEntity entity)
         {
-            if (entity.Coordinates.X == 0 && entity.Direction == Direction.Left)
+            if (entity.Coordinates.X < 0 && entity.Direction == Direction.Left)
             {
                 return true;
             }
-            if (entity.Coordinates.X == mapSize.Width - entity.Sprite.Width &&
+            if (entity.Coordinates.X > mapSize.Width - entity.Sprite.Width &&
                 entity.Direction == Direction.Right)
             {
                 return true;
             }
-            if (entity.Coordinates.Y == 0 && entity.Direction == Direction.Up)
+            if (entity.Coordinates.Y < 0 && entity.Direction == Direction.Up)
             {
                 return true;
             }
-            if (entity.Coordinates.Y == mapSize.Height - entity.Sprite.Height &&
+            if (entity.Coordinates.Y > mapSize.Height - entity.Sprite.Height &&
                 entity.Direction == Direction.Down)
             {
                 return true;
