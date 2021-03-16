@@ -17,6 +17,7 @@ namespace Tanks
             InitializeComponent();
             dataGridView1.DataSource = source;
             dataGridView1.Columns["Id"].Visible = false;
+            ControlBox = false;
 
         }
     }

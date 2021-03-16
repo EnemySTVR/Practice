@@ -34,7 +34,6 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.ScoresLabel = new System.Windows.Forms.Label();
             this.OpenInfoBoxLabel = new System.Windows.Forms.Label();
-            this.mock = new System.Windows.Forms.Button();
             this.GameResultLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MenuImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GameMapPictureBox)).BeginInit();
@@ -94,20 +93,10 @@
             this.OpenInfoBoxLabel.Font = new System.Drawing.Font("Showcard Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.OpenInfoBoxLabel.Location = new System.Drawing.Point(511, 7);
             this.OpenInfoBoxLabel.Name = "OpenInfoBoxLabel";
-            this.OpenInfoBoxLabel.Size = new System.Drawing.Size(100, 17);
+            this.OpenInfoBoxLabel.Size = new System.Drawing.Size(104, 17);
             this.OpenInfoBoxLabel.TabIndex = 6;
-            this.OpenInfoBoxLabel.Text = "open infobox";
+            this.OpenInfoBoxLabel.Text = "show infobox";
             this.OpenInfoBoxLabel.Click += new System.EventHandler(this.OpenInfoPanel_Click);
-            // 
-            // mock
-            // 
-            this.mock.Location = new System.Drawing.Point(283, 3);
-            this.mock.Name = "mock";
-            this.mock.Size = new System.Drawing.Size(75, 23);
-            this.mock.TabIndex = 7;
-            this.mock.Text = "this is mock";
-            this.mock.UseVisualStyleBackColor = true;
-            this.mock.Visible = false;
             // 
             // GameResultLabel
             // 
@@ -129,7 +118,6 @@
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(621, 399);
             this.Controls.Add(this.GameResultLabel);
-            this.Controls.Add(this.mock);
             this.Controls.Add(this.OpenInfoBoxLabel);
             this.Controls.Add(this.ScoresLabel);
             this.Controls.Add(this.StartButton);
@@ -153,7 +141,6 @@
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Label ScoresLabel;
         private System.Windows.Forms.Label OpenInfoBoxLabel;
-        private System.Windows.Forms.Button mock;
         private System.Windows.Forms.Label GameResultLabel;
     }
 }

@@ -14,6 +14,8 @@ namespace Tanks
         private Form informationForm;
         private int width;
         private int height;
+        private Timer timer = new Timer();
+        private bool infoVisible = false;
 
 
 
@@ -28,50 +30,22 @@ namespace Tanks
             GameMapPictureBox.Size = new Size(this.width, this.height);
             GameMapPictureBox.Location = new Point(0, 30);
 
+            timer.Interval = 50;
+            timer.Tick += ViewLoop;
+
             controller.Initial(tanksValue, appleValue, GameMapPictureBox.Size);
             GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);
+            informationForm = new InformationForm(controller.GetInformationSource());
         }
 
 
         private void StartGame_Click(object sender, EventArgs e)
         {
             GameResultLabel.Visible = false;
-            mock.Select();
-            Timer timer = new Timer();
+            StartButton.Enabled = false;
             MenuImage.Hide();
             StartButton.Hide();
-            timer.Interval = 50;
-            timer.Tick += delegate(object obj, EventArgs args)
-            {
-                var nextBitmap = controller.GetNextBitmap(GameMapPictureBox.Size);
-                if (nextBitmap != null)
-                {
-                    GameMapPictureBox.Image = nextBitmap;
-                    ScoresLabel.Text = controller.GetScores();
 
-                }
-                else
-                {
-                    timer.Stop();
-                    if (controller.GetGameResult())
-                    {
-                        GameResultLabel.Text = "Ты победил!";
-                    }
-                    else
-                    {
-                        GameResultLabel.Text = "Ты проиграл!";
-                    }
-                    GameResultLabel.Visible = true;
-                    controller.Initial();
-                    GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);
-                    ScoresLabel.Text = controller.GetScores();
-                    MenuImage.Show();
-                    StartButton.Show();
-                    StartButton.Select();
-
-                }
-                
-            };
             timer.Start();
         }
 
@@ -99,8 +73,49 @@ namespace Tanks
 
         private void OpenInfoPanel_Click(object sender, EventArgs e)
         {
-            informationForm = new InformationForm(controller.GetInformationSource());
-            informationForm.Show();
+            if (infoVisible)
+            {
+                informationForm.Hide();
+                OpenInfoBoxLabel.Text = "show infobox";
+            }
+            else
+            {
+                informationForm.Show();
+                OpenInfoBoxLabel.Text = "Hide infobox";
+            }
+            infoVisible = !infoVisible;
+        }
+
+        private void ViewLoop(object obj, EventArgs args)
+        {
+            var nextBitmap = controller.GetNextBitmap(GameMapPictureBox.Size);
+            if (nextBitmap != null)
+            {
+                GameMapPictureBox.Image = nextBitmap;
+                ScoresLabel.Text = controller.GetScores();
+
+            }
+            else
+            {
+                timer.Stop();
+                if (controller.GetGameResult())
+                {
+                    GameResultLabel.Text = "Ты победил!";
+                }
+                else
+                {
+                    GameResultLabel.Text = "Ты проиграл!";
+                }
+                GameResultLabel.Visible = true;
+                StartButton.Enabled = true;
+                controller.Initial();
+                GameMapPictureBox.Image = controller.GetNextBitmap(GameMapPictureBox.Size);
+                ScoresLabel.Text = controller.GetScores();
+                MenuImage.Show();
+                StartButton.Show();
+                StartButton.Select();
+            }
+
         }
     }
 }

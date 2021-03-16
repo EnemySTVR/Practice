@@ -160,7 +160,11 @@ namespace Tanks.Controller
 
         internal void ChangePlayerDirection(Direction direction)
         {
-            kolobok.ChangeDirection(direction);
+            if (kolobok != null)
+            {
+                kolobok.ChangeDirection(direction);
+            }
+            
         }
 
         internal void KolobokShot()
